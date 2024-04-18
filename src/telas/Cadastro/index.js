@@ -4,19 +4,30 @@ import Botao from '../../componentes/Botao';
 import { EntradaTexto } from '../../componentes/EntradaTexto';
 import estilos from './estilos';
 import { cadastrar } from '../../servicos/requisicoesFirebase';
-
+import { auth } from '../../config/firebase';
+import { getAuth, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 
 export default function Cadastro({ navigation }) {  
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmaSenha, setConfirmaSenha] = useState('');
 
-  async function realizarCadastro(){
-    await cadastrar(email, senha, confirmaSenha);
-    setEmail('')
-    setSenha('')
-    setConfirmaSenha('')
-  }
+  // async function realizarCadastro(){
+  //   await cadastrar(email, senha, confirmaSenha);
+  //   setEmail('')
+  //   setSenha('')
+  //   setConfirmaSenha('')
+  // }
+
+  useEffect(() => {
+    createUserWithEmailAndPassword(auth, 'teste@email.com', '123456').
+    then((dadosUsuario) => {
+      console.log(dadosUsuario)
+    }).catch((error) => {
+      console.log(error)
+    });
+  }, [])
+  
 
   return (
     <View style={estilos.container}>
